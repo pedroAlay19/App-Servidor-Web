@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from 'typeorm';
 import { TicketEntity } from './ticket.entity';
 
-@Entity()
+@Entity('Notification')
 export class NotificationEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => TicketEntity, ticket => ticket.notifications, { onDelete: 'CASCADE' })
+  @ManyToOne(() => TicketEntity, ticket => ticket.notifications)
   ticket!: TicketEntity;
 
   @Column()

@@ -2,15 +2,15 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import { TicketEntity } from './ticket.entity';
 import { PartEntity } from './part.entity';
 
-@Entity('ticket_parts')
+@Entity('Ticket-Part')
 export class TicketPartEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => TicketEntity, ticket => ticket.ticketParts, { onDelete: 'CASCADE' })
+  @ManyToOne(() => TicketEntity, ticket => ticket.ticketParts)
   ticket!: TicketEntity;
 
-  @ManyToOne(() => PartEntity, part => part.ticketParts, { onDelete: 'RESTRICT' })
+  @ManyToOne(() => PartEntity, part => part.ticketParts)
   part!: PartEntity;
 
   @Column({type: 'int'})

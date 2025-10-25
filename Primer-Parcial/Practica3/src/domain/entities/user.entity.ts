@@ -1,12 +1,11 @@
-import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, TableInheritance, UpdateDateColumn } from "typeorm";
 import { UserRole } from "../enums/user-role.enum";
 import { EquipmentEntity } from "./equipment.entity";
-import { TicketEntity } from "./ticket.entity";
-import { TechnicianEntity } from "./technician.entity";
 
-@Entity()
+@Entity('User')
+@TableInheritance({ column: { type: "varchar", name: "role" } })
 export class UserEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
@@ -33,11 +32,6 @@ export class UserEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @OneToMany(() => EquipmentEntity, equipment => equipment.user)
+  @OneToMany(() => EquipmentEntity, equipment => equipment.user, {nullable: true})
   equipments?: EquipmentEntity[];
-
-  @OneToOne(() => TechnicianEntity, technician => technician.user)
-  technicianProfile?: TechnicianEntity;
-
-  assignedTickets?: TicketEntity[];
 }

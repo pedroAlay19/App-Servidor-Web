@@ -1,0 +1,175 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AverageCostPerServiceType {
+  averageCost: Float!
+  service: MaintenanceServiceType!
+}
+
+input DateRangeInput {
+  """End date for the report"""
+  endDate: DateTime!
+
+  """Start date for the report"""
+  startDate: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type MaintenanceServiceType {
+  active: Boolean!
+  basePrice: Float!
+  description: String!
+  estimatedTimeMinutes: Int!
+  id: ID!
+  requiresParts: Boolean!
+  serviceName: String!
+  type: String!
+}
+
+type MostRequestedServiceType {
+  service: MaintenanceServiceType!
+  totalRequests: Int!
+}
+
+type PartUsageSummaryType {
+  part: SparePartType!
+  service: MaintenanceServiceType!
+  technician: TechnicianType!
+  totalUsed: Int!
+}
+
+type PartUsageType {
+  """Spare part information"""
+  part: SparePartType!
+
+  """Total quantity of this part used for the service"""
+  totalUsed: Int!
+}
+
+type Query {
+  averageCostPerServiceType(range: DateRangeInput!): [AverageCostPerServiceType!]!
+  averageDiscountByTechnician(range: DateRangeInput!): [TechnicianAverageDiscountType!]!
+  maintenanceService(id: ID!): MaintenanceServiceType!
+  maintenanceServices: [MaintenanceServiceType!]!
+  mostRequestedServices(limit: Int): [MostRequestedServiceType!]!
+  ordersByStatus(status: String!): [RepairOrderType!]!
+  partsRestockRecommendation(threshold: Int!): [SparePartType!]!
+  partsUsageSummary(range: DateRangeInput!): [PartUsageSummaryType!]!
+  repairOrder(id: ID!): RepairOrderType!
+  repairOrders: [RepairOrderType!]!
+  repairOrdersStatusSummary: RepairOrderStatusSummaryType!
+  repairOrdersWithServicesAndTechnicians: [RepairOrderWithDetailsType!]!
+  servicePartsUsageReport(range: DateRangeInput!): [ServicePartsUsageType!]!
+  sparePart(id: ID!): SparePartType!
+  spareParts: [SparePartType!]!
+  technician(id: ID!): TechnicianType!
+  technicians: [TechnicianType!]!
+  techniciansRevenue(range: DateRangeInput!): [TechnicianRevenueType!]!
+}
+
+type RepairOrderDetailType {
+  createdAt: DateTime!
+  discount: Float!
+  id: ID!
+  service: MaintenanceServiceType!
+  status: String!
+  subTotal: Float!
+  technician: TechnicianType!
+  unitPrice: Float!
+  updatedAt: DateTime!
+}
+
+type RepairOrderPartType {
+  createdAt: DateTime!
+  id: ID!
+  notes: String!
+  part: SparePartType!
+  quantity: Int!
+  subTotal: Float!
+}
+
+type RepairOrderServiceDetailType {
+  """Name of the maintenance service performed"""
+  serviceName: String!
+
+  """Subtotal for this service"""
+  subTotal: Float!
+
+  """Technician assigned to perform this service"""
+  technicianName: String!
+}
+
+type RepairOrderStatusSummaryType {
+  closed: Int!
+  inProgress: Int!
+  open: Int!
+  resolved: Int!
+}
+
+type RepairOrderType {
+  createdAt: DateTime!
+  estimatedCost: Float!
+  finalCost: Float!
+  id: ID!
+  problemDescription: String!
+  repairOrderDetails: [RepairOrderDetailType!]
+  repairOrderParts: [RepairOrderPartType!]
+  status: String!
+  warrantyEndDate: DateTime!
+  warrantyStartDate: DateTime!
+}
+
+type RepairOrderWithDetailsType {
+  """Unique identifier of the repair order"""
+  id: String!
+
+  """Problem description reported by the customer"""
+  problemDescription: String!
+
+  """List of services and technicians assigned to this order"""
+  serviceDetails: [RepairOrderServiceDetailType!]
+
+  """Current status of the repair order"""
+  status: String!
+}
+
+type ServicePartsUsageType {
+  """List of parts used for this service"""
+  partsUsed: [PartUsageType!]!
+
+  """Maintenance service information"""
+  service: MaintenanceServiceType!
+}
+
+type SparePartType {
+  createdAt: DateTime!
+  description: String!
+  id: ID!
+  name: String!
+  repairOrderParts: [RepairOrderPartType!]
+  stock: Int!
+  unitPrice: Float!
+  updatedAt: DateTime!
+}
+
+type TechnicianAverageDiscountType {
+  averageDiscount: Float!
+  technician: TechnicianType!
+}
+
+type TechnicianRevenueType {
+  technician: TechnicianType!
+  totalRevenue: Float!
+}
+
+type TechnicianType {
+  id: ID!
+  name: String!
+  specialty: String!
+  ticketServices: [RepairOrderDetailType!]
+}

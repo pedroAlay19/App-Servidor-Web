@@ -6,12 +6,12 @@ import { TicketStatus } from '../enums/ticket.enum';
 import { NotificationEntity } from './notification.entity';
 import { ReviewEntity } from './review.entity';
 
-@Entity()
+@Entity('Ticket')
 export class TicketEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => EquipmentEntity, equipment => equipment.tickets, { onDelete: 'SET NULL' })
+  @ManyToOne(() => EquipmentEntity, equipment => equipment.tickets)
   equipment!: EquipmentEntity;
 
   @Column({ type: 'text'})
@@ -36,16 +36,16 @@ export class TicketEntity {
   status!: TicketStatus;
 
   @OneToMany(() => TicketServiceEntity, ts => ts.ticket)
-  ticketServices?: TicketServiceEntity[];
+  ticketServices!: TicketServiceEntity[];
 
-  @OneToMany(() => TicketPartEntity, tp => tp.ticket)
+  @OneToMany(() => TicketPartEntity, tp => tp.ticket, {nullable: true})
   ticketParts?: TicketPartEntity[];
 
   @OneToMany(() => NotificationEntity, notification => notification.ticket)
-  notifications?: NotificationEntity;
+  notifications!: NotificationEntity[];
 
-  @OneToMany(() => ReviewEntity, review => review.ticket)
-  reviews?: ReviewEntity;
+  @OneToMany(() => ReviewEntity, review => review.ticket, {nullable: true})
+  reviews?: ReviewEntity[];
 
   @CreateDateColumn()
   createdAt!: Date;

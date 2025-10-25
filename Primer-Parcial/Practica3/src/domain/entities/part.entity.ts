@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TicketPartEntity } from "./ticket-part.entity";
 
-@Entity()
+@Entity('Repair-Part')
 export class PartEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;

@@ -1,18 +1,11 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { UserEntity } from './user.entity';
+import { Column, OneToMany, ChildEntity } from 'typeorm';
 import { TicketServiceEntity } from './ticket-service.entity';
+import { UserEntity } from './user.entity';
 
-@Entity()
-export class TechnicianEntity {
-  @PrimaryGeneratedColumn('uuid')
-  technicianId!: string;
-
-  @OneToOne(() => UserEntity, user => user.technicianProfile, { onDelete: 'CASCADE' })
-  @JoinColumn()
-  user!: UserEntity;
-
-  // @OneToMany(() => TicketServiceEntity, ts => ts.technician)
-  // ticketServices!: TicketServiceEntity[];
+@ChildEntity('Technician')
+export class TechnicianEntity extends UserEntity {
+  @OneToMany(() => TicketServiceEntity, ts => ts.technician)
+  ticketServices!: TicketServiceEntity[];
 
   @Column()
   specialty!: string;
@@ -21,11 +14,5 @@ export class TechnicianEntity {
   experienceYears!: number;
 
   @Column()
-  state!: string;
-
-  @CreateDateColumn()
-  createdAt!: Date;
-
-  @UpdateDateColumn()
-  updatedAt!: Date;
+  active!: boolean;
 }

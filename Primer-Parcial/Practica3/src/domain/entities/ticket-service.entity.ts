@@ -1,22 +1,22 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { TicketEntity } from './ticket.entity';
 import { ServiceEntity } from './service.entity';
-// import { TechnicianEntity } from './technician.entity';
+import { TechnicianEntity } from './technician.entity';
 import { TicketServiceStatus } from '../enums/ticket.enum';
 
-@Entity()
+@Entity('Ticket-Service')
 export class TicketServiceEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne(() => TicketEntity, ticket => ticket.ticketServices, { onDelete: 'CASCADE' })
+  @ManyToOne(() => TicketEntity, ticket => ticket.ticketServices)
   ticket!: TicketEntity;
 
-  @ManyToOne(() => ServiceEntity, service => service.ticketServices, { onDelete: 'RESTRICT' })
+  @ManyToOne(() => ServiceEntity, service => service.ticketServices)
   service!: ServiceEntity;
 
-  // @ManyToOne(() => TechnicianEntity, tech => tech.ticketServices, { onDelete: 'SET NULL'})
-  // technician?: TechnicianEntity;
+  @ManyToOne(() => TechnicianEntity, tech => tech.ticketServices)
+  technician?: TechnicianEntity;
 
   @Column({ type: 'numeric', precision: 12, scale: 2, default: 0 })
   unitPrice!: number;

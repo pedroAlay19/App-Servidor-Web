@@ -3,12 +3,12 @@ import { EquipmentStatus, EquipmentType } from "../enums/equipment.enum";
 import { TicketEntity } from "./ticket.entity";
 import { UserEntity } from "./user.entity";
 
-@Entity()
+@Entity('Equipment')
 export class EquipmentEntity {
   @PrimaryGeneratedColumn()
   id!: string;
 
-  @ManyToOne(() => UserEntity, user => user.equipments, { onDelete: 'SET NULL' })
+  @ManyToOne(() => UserEntity, user => user.equipments)
   user!: UserEntity;
   
   @Column()
@@ -36,5 +36,5 @@ export class EquipmentEntity {
   currentStatus!: EquipmentStatus;
 
   @OneToMany(() => TicketEntity, ticket => ticket.equipment)
-  tickets?: TicketEntity[];
+  tickets!: TicketEntity[];
 }

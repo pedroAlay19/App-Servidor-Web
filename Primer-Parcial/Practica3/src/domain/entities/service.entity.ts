@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { TicketServiceEntity } from './ticket-service.entity';
 
-@Entity()
+@Entity('Service')
 export class ServiceEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
@@ -34,5 +34,5 @@ export class ServiceEntity {
   notes?: string;
 
   @OneToMany(() => TicketServiceEntity, ts => ts.service)
-  ticketServices!: TicketServiceEntity;
+  ticketServices!: TicketServiceEntity[];
 }

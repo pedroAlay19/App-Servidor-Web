@@ -6,6 +6,7 @@ import { EquipmentRepository } from "./infrastructure/repositories/EquipmentRepo
 async function main() {
   try {
     await AppDataSource.initialize();
+    console.log('Todo ok!')
     const repo = new EquipmentRepository();
     const service = new EquipmentService(repo);
 
